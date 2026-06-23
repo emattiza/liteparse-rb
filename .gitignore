@@ -1,0 +1,6 @@
+/target/
+liteparse/
+*.bundle
+*.so
+*.dylib
+tmp/
