@@ -56,6 +56,7 @@ jobs:
           ruby -r rubygems/package -e "
             spec = Gem::Specification.load('liteparse-rb.gemspec')
             spec.platform = '${{ matrix.platform }}'
+            spec.extensions = []
             Gem::Package.build(spec)
           "
           mkdir -p pkg
