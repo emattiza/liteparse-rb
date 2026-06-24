@@ -53,7 +53,11 @@ jobs:
       - name: Build platform gem
         run: |
           VERSION=$(grep VERSION lib/liteparse/version.rb | head -1 | cut -d'"' -f2)
-          gem build liteparse-rb.gemspec --platform ${{ matrix.platform }}
+          ruby -r rubygems/package -e "
+            spec = Gem::Specification.load('liteparse-rb.gemspec')
+            spec.platform = '${{ matrix.platform }}'
+            Gem::Package.build(spec)
+          "
           mkdir -p pkg
           mv liteparse-rb-*.gem "pkg/liteparse-rb-${VERSION}-${{ matrix.platform }}.gem"
 

@@ -7,3 +7,4 @@ tmp/
 /bin/
 *.py
 /pkg/
+liteparse-rb-*.gem
