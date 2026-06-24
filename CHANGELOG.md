@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.3 (2026-06-24)
+
+- Fix: output built gem to `pkg/` where release action expects it
+
 ## v0.1.2 (2026-06-24)
 
 - Fix: run `bundle install` after version bumps to sync Gemfile.lock
