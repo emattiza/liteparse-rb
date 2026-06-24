@@ -128,6 +128,7 @@ ruby -I lib -e "require 'liteparse'; puts LiteParse::VERSION"
 ```sh
 # Bump version in lib/liteparse/version.rb and crates/*/Cargo.toml
 # Add entry to CHANGELOG.md
+bundle install    # syncs Gemfile.lock with new version
 git add -A && git commit -m "Release v0.1.0"
 git tag v0.1.0
 git push && git push --tags

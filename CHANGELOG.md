@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.2 (2026-06-24)
+
+- Fix: run `bundle install` after version bumps to sync Gemfile.lock
+- Fix: add `rake release` task for rubygems/release-gem action
+
 ## v0.1.1 (2026-06-24)
 
 - Fix: release workflow — add `rake release` task for source gem publishing
