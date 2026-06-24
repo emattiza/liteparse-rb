@@ -1,0 +1,8 @@
+/target/
+/liteparse/
+*.bundle
+*.so
+*.dylib
+tmp/
+/bin/
+*.py

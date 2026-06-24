@@ -1,0 +1,12 @@
+# Changelog
+
+## v0.1.0 (2026-06-24)
+
+- Initial release of liteparse-rb
+- PDF parsing with layout-aware text extraction (text items, bounding boxes, fonts)
+- OCR via Tesseract (auto-downloads traineddata, ImageMagick for image files)
+- Screenshot rendering of PDF pages to PNG
+- Text search across parsed items
+- `parse_bytes` for in-memory document parsing
+- Prebuilt platform gems for arm64-darwin, x86_64-linux, aarch64-linux
+- Source gem for all other platforms
