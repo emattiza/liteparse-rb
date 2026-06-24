@@ -17,3 +17,8 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task default: :compile
+
+desc "Build gem (used by rubygems/release-gem action)"
+task :release do
+  sh "gem build liteparse-rb.gemspec"
+end
