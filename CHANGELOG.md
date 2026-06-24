@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.4 (2026-06-24)
+
+- Fix: simplify release workflow — publish source gem only (platform gems later)
+
 ## v0.1.3 (2026-06-24)
 
 - Fix: output built gem to `pkg/` where release action expects it

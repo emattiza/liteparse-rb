@@ -5,82 +5,85 @@ on:
     tags:
       - "v*"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     uses: ./.github/workflows/ci.yml
 
-  build:
+  cross-gems:
     needs: test
+    name: Build ${{ matrix.platform }}
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: macos-latest
-            platform: arm64-darwin
-          - os: ubuntu-latest
-            platform: x86_64-linux
-          - os: ubuntu-24.04-arm
-            platform: aarch64-linux
-
-    runs-on: ${{ matrix.os }}
-
-    permissions:
-      id-token: write
-
-    environment: release
-
+        platform:
+          - arm64-darwin
+          - x86_64-linux
+          - aarch64-linux
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
         with:
-          persist-credentials: false
-
-      - name: Install system dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq cmake
-
-      - name: Install system dependencies (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install cmake
-
-      - name: Setup Rust
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
           ruby-version: "4.0"
 
-      - name: Build native extension
-        run: bundle exec rake compile
-
-      - name: Build and push platform gem
-        uses: rubygems/release-gem@v1
+      - uses: oxidize-rb/actions/cross-gem@v1
+        id: cross-gem
         with:
           platform: ${{ matrix.platform }}
+          ruby-versions: "3.3,3.4,4.0"
 
-  push-source:
-    needs: test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gem-${{ matrix.platform }}
+          path: pkg/*-${{ matrix.platform }}.gem
+          if-no-files-found: error
+
+  release:
+    needs: [test, cross-gems]
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
-
     environment: release
-
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
           ruby-version: "4.0"
 
-      - name: Build and push source gem
-        uses: rubygems/release-gem@v1
+      - name: Configure OIDC credentials
+        uses: rubygems/configure-rubygems-credentials@v2.1.0
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: gem-*
+          merge-multiple: true
+          path: pkg/
+
+      - name: Build source gem
+        run: gem build liteparse-rb.gemspec && mv liteparse-rb-*.gem pkg/
+
+      - name: Ensure version matches tag
+        run: |
+          VERSION=$(grep VERSION lib/liteparse/version.rb | head -1 | cut -d'"' -f2)
+          if [ "v$VERSION" != "${{ github.ref_name }}" ]; then
+            echo "Version mismatch: v$VERSION != ${{ github.ref_name }}"
+            exit 1
+          fi
+
+      - name: Push all gems
+        working-directory: pkg/
+        run: |
+          for gem in *.gem; do
+            [ -f "$gem" ] || continue
+            echo "Pushing $gem..."
+            gem push "$gem"
+          done
