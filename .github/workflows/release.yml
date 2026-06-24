@@ -51,12 +51,16 @@ jobs:
         run: bundle exec rake compile
 
       - name: Build platform gem
-        run: gem build liteparse-rb.gemspec --platform ${{ matrix.platform }}
+        run: |
+          VERSION=$(grep VERSION lib/liteparse/version.rb | head -1 | cut -d'"' -f2)
+          gem build liteparse-rb.gemspec --platform ${{ matrix.platform }}
+          mkdir -p pkg
+          mv liteparse-rb-*.gem "pkg/liteparse-rb-${VERSION}-${{ matrix.platform }}.gem"
 
       - uses: actions/upload-artifact@v4
         with:
           name: gem-${{ matrix.platform }}
-          path: liteparse-rb-*.gem
+          path: pkg/liteparse-rb-*.gem
           if-no-files-found: error
 
   release:
@@ -85,7 +89,9 @@ jobs:
           path: pkg/
 
       - name: Build source gem
-        run: gem build liteparse-rb.gemspec && mv liteparse-rb-*.gem pkg/
+        run: |
+          gem build liteparse-rb.gemspec
+          mv liteparse-rb-*.gem pkg/
 
       - name: Ensure version matches tag
         run: |
