@@ -50,6 +50,35 @@ jobs:
       - name: Compile native extension
         run: bundle exec rake compile
 
+      - name: Bundle pdfium next to native extension
+        run: |
+          case "${{ matrix.platform }}" in
+            arm64-darwin)
+              ASSET="pdfium-mac-arm64"
+              DYLIB="libpdfium.dylib"
+              ;;
+            x86_64-linux)
+              ASSET="pdfium-linux-x64"
+              DYLIB="libpdfium.so"
+              ;;
+            aarch64-linux)
+              ASSET="pdfium-linux-arm64"
+              DYLIB="libpdfium.so"
+              ;;
+          esac
+          TAG="chromium/7897"
+          URL_TAG="${TAG//\//%2F}"
+          URL="https://github.com/run-llama/pdfium-binaries/releases/download/${URL_TAG}/${ASSET}.tgz"
+          TMP=$(mktemp -d)
+          curl -fsSL "$URL" -o "$TMP/${ASSET}.tgz"
+          tar -xzf "$TMP/${ASSET}.tgz" -C "$TMP"
+          SRC="$TMP/lib/$DYLIB"
+          if [ "$DYLIB" = "libpdfium.dylib" ] && command -v install_name_tool >/dev/null 2>&1; then
+            install_name_tool -id "@rpath/libpdfium.dylib" "$SRC"
+          fi
+          cp "$SRC" "lib/liteparse/$DYLIB"
+          echo "Copied pdfium -> lib/liteparse/$DYLIB"
+
       - name: Build platform gem
         run: |
           VERSION=$(grep VERSION lib/liteparse/version.rb | head -1 | cut -d'"' -f2)
