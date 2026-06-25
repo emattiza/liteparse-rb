@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.12 (2026-06-25)
+
+- Bundle pdfium shared library in platform gems — no separate PDFium install needed (#3)
+- Use upstream test fixtures; remove swim_meet.pdf
+- Document all runtime dependencies in README
+
 ## v0.1.11 (2026-06-25)
 
 - Bundle pdfium shared library in platform gems — no separate PDFium install needed

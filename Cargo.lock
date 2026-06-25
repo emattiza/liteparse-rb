@@ -1121,7 +1121,7 @@ checksum = "92daf443525c4cce67b150400bc2316076100ce0b3686209eb8cf3c31612e6f0"
 
 [[package]]
 name = "liteparse"
-version = "0.1.11"
+version = "0.1.12"
 dependencies = [
  "liteparse 2.2.0",
  "liteparse-ruby",
@@ -1175,7 +1175,7 @@ dependencies = [
 
 [[package]]
 name = "liteparse-ruby"
-version = "0.1.11"
+version = "0.1.12"
 dependencies = [
  "anyhow",
  "image",
