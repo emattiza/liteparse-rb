@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.9 (2026-06-24)
+
+- Relocatable platform gems — precompiled .bundle/.so no longer linked to CI Ruby
+- Remove magnus embed feature for runtime symbol resolution
+
 ## v0.1.4 (2026-06-24)
 
 - Fix: simplify release workflow — publish source gem only (platform gems later)
