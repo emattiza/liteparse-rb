@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.14 (2026-06-25)
+
+- Add YARD documentation for all public API (100% documented)
+- Set up YARD tooling: .yardopts, Rake task, CI check on release
+- Document Rust-defined methods via @!method annotations
+
 ## v0.1.13 (2026-06-25)
 
 - Include THIRDPARTY.md and LICENSE in gem with trademark notice for LlamaIndex

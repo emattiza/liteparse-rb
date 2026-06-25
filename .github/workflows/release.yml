@@ -127,6 +127,9 @@ jobs:
           gem build liteparse-rb.gemspec
           mv liteparse-rb-*.gem pkg/
 
+      - name: Build and verify documentation
+        run: bundle exec yard doc --no-cache
+
       - name: Ensure version matches tag
         run: |
           VERSION=$(grep VERSION lib/liteparse/version.rb | head -1 | cut -d'"' -f2)

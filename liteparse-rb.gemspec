@@ -17,6 +17,9 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rb_sys", "~> 0.9"
 
+  spec.add_development_dependency "yard", "~> 0.9"
+
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["documentation_uri"] = "https://rubydoc.info/gems/liteparse-rb"
 end

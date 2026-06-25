@@ -8,3 +8,5 @@ tmp/
 *.py
 /pkg/
 liteparse-rb-*.gem
+.yardoc/
+doc/

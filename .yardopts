@@ -1,0 +1,6 @@
+--readme README.md
+--output-dir doc/
+--markup markdown
+--main README.md
+--protected
+lib/**/*.rb

@@ -16,4 +16,11 @@ Rake::TestTask.new(:test) do |t|
   t.warning = false
 end
 
+begin
+  require "yard"
+  YARD::Rake::YardocTask.new
+rescue LoadError
+  # yard not installed
+end
+
 task default: :compile
