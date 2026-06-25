@@ -10,12 +10,12 @@ use liteparse::config::{ImageMode, LiteParseConfig, OutputFormat};
 use liteparse::types::PdfInput;
 
 fn kwarg<T: magnus::TryConvert>(kwargs: &RHash, key: &str) -> Option<T> {
-    let sym = magnus::Symbol::new(key);
+    let sym = Ruby::get().unwrap().to_symbol(key);
     kwargs.get::<magnus::Symbol>(sym).and_then(|v| <T as magnus::TryConvert>::try_convert(v).ok())
 }
 
 fn kwarg_bool(kwargs: &RHash, key: &str) -> Option<bool> {
-    let sym = magnus::Symbol::new(key);
+    let sym = Ruby::get().unwrap().to_symbol(key);
     kwargs.get::<magnus::Symbol>(sym).and_then(|v| {
         use magnus::value::ReprValue;
         if v.is_nil() { None } else { Some(v.to_bool()) }
