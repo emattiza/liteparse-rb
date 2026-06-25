@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.13 (2026-06-25)
+
+- Include THIRDPARTY.md and LICENSE in gem with trademark notice for LlamaIndex
+
 ## v0.1.12 (2026-06-25)
 
 - Bundle pdfium shared library in platform gems — no separate PDFium install needed (#3)
