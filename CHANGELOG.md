@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.11 (2026-06-25)
+
+- Bundle pdfium shared library in platform gems — no separate PDFium install needed
+- Document all runtime dependencies in README
+
 ## v0.1.10 (2026-06-25)
 
 - Fix: update Gemfile.lock to match updated gemspec version on release
