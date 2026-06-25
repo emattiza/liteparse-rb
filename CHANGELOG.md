@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.10 (2026-06-25)
+
+- Fix: update Gemfile.lock to match updated gemspec version on release
+
 ## v0.1.9 (2026-06-24)
 
 - Relocatable platform gems — precompiled .bundle/.so no longer linked to CI Ruby
