@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.license = "Apache-2.0"
   spec.required_ruby_version = ">= 3.3"
 
-  spec.files = Dir["lib/**/*.rb", "lib/**/*.{bundle,so,dylib}", "ext/**/*.{rb,rs}", "Cargo.toml", "Cargo.lock", "crates/**/*"]
+  spec.files = Dir["lib/**/*.rb", "lib/**/*.{bundle,so,dylib}", "ext/**/*.{rb,rs}", "Cargo.toml", "Cargo.lock", "crates/**/*", "THIRDPARTY.md", "LICENSE"]
   spec.require_paths = ["lib"]
 
   spec.extensions = ["ext/liteparse/extconf.rb"]
