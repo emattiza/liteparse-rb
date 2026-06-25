@@ -1,5 +1,7 @@
 # liteparse-rb
 
+[![Gem Version](https://badge.fury.io/rb/liteparse-rb.svg)](https://badge.fury.io/rb/liteparse-rb)
+
 Ruby bindings for [LiteParse](https://github.com/run-llama/liteparse) — a fast, open-source document parser that extracts text with spatial layout information, bounding boxes, and OCR support.
 
 Built with [magnus](https://github.com/matsadler/magnus) for native Rust→Ruby FFI.
