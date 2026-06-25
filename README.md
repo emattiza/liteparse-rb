@@ -6,14 +6,18 @@ Built with [magnus](https://github.com/matsadler/magnus) for native Rust→Ruby 
 
 ## Installation
 
+Add `liteparse-rb` to your application with Bundler:
+
 ```sh
-gem install liteparse-rb
+bundle add liteparse-rb
 ```
 
-Or with Bundler:
+This will add the gem to your `Gemfile` and install it.
 
-```ruby
-gem "liteparse-rb"
+You can also install it directly with:
+
+```sh
+gem install liteparse-rb
 ```
 
 ## Usage
