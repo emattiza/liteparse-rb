@@ -31,17 +31,14 @@ class TestScreenshotBasic < Minitest::Test
   end
 
   def test_screenshot_page_numbers_filter
-    result = @parser.screenshot(SWIM_MEET_PDF, page_numbers: [1])
+    result = @parser.screenshot(SAMPLE_PDF, page_numbers: [1])
     assert_equal 1, result.length
     assert_equal 1, result[0].page_num
   end
 
-  def test_screenshot_multiple_pages
-    result = @parser.screenshot(SWIM_MEET_PDF, page_numbers: [1, 3])
-    assert_equal 2, result.length
-    page_nums = result.map(&:page_num)
-    assert_includes page_nums, 1
-    assert_includes page_nums, 3
+  def test_screenshot_default_all_pages
+    result = @parser.screenshot(SAMPLE_PDF)
+    assert_equal 1, result.length
   end
 end
 

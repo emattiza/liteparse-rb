@@ -5,7 +5,7 @@ require "fileutils"
 
 FIXTURES_DIR = File.expand_path("fixtures", __dir__)
 SAMPLE_PDF = File.join(FIXTURES_DIR, "sample.pdf")
-SWIM_MEET_PDF = File.join(FIXTURES_DIR, "swim_meet.pdf")
+SAMPLE_DOC = File.join(FIXTURES_DIR, "sample3.doc")
 RECEIPT_PNG = File.join(FIXTURES_DIR, "receipt.png")
 
 def create_parser(**kwargs)

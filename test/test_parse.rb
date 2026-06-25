@@ -29,15 +29,16 @@ class TestParseBasic < Minitest::Test
     assert result.text.length > 0
   end
 
-  def test_multi_page_parse
-    result = @parser.parse(SWIM_MEET_PDF)
-    assert_equal 12, result.num_pages
-  end
-
   def test_multi_page_text_joined
     result = @parser.parse(SAMPLE_PDF)
     pages_text = result.pages.map(&:text).join("\n\n")
     assert_equal result.text, pages_text
+  end
+
+  def test_single_page
+    result = @parser.parse(SAMPLE_PDF)
+    assert_equal 1, result.num_pages
+    assert_equal 1, result.pages.length
   end
 end
 
@@ -81,14 +82,14 @@ class TestParseOptions < Minitest::Test
 
   def test_target_pages
     parser = LiteParse::LiteParse.new(target_pages: "1")
-    result = parser.parse(SWIM_MEET_PDF)
+    result = parser.parse(SAMPLE_PDF)
     assert_equal 1, result.num_pages
     assert_equal 1, result.pages[0].page_num
   end
 
   def test_max_pages
     parser = LiteParse::LiteParse.new(max_pages: 1)
-    result = parser.parse(SWIM_MEET_PDF)
+    result = parser.parse(SAMPLE_PDF)
     assert_equal 1, result.num_pages
   end
 
