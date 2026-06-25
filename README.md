@@ -22,11 +22,10 @@ gem install liteparse-rb
 
 ## Runtime Dependencies
 
-The gem loads PDFium dynamically at runtime and shells out to external tools for certain input formats. Prebuilt platform gems include everything except the items below.
+The gem bundles PDFium inside platform gems and shells out to external tools for certain input formats.
 
 | Dependency | Required for | When needed | Config / Env var |
 |---|---|---|---|
-| **PDFium** (`libpdfium.so`/`.dylib`) | All PDF parsing and rendering | Always | `PDFIUM_LIB_PATH` (directory containing the shared library) |
 | **Tesseract** (C++ library + traineddata) | OCR on scanned pages and images | Always (feature default, can disable with `tesseract: false`) | `TESSDATA_PREFIX` or `tessdata_path:` config option; traineddata auto-downloads if missing |
 | **ImageMagick** (`magick` or `convert`) | Image file input (`.jpg`, `.png`, `.gif`, `.bmp`, `.tiff`, `.webp`, `.svg`) | Only when parsing image files | — |
 | **LibreOffice** (`libreoffice` or `soffice`) | Office document input (`.docx`, `.pptx`, `.xlsx`, `.odt`, etc.) | Only when parsing office files | — |
@@ -35,19 +34,13 @@ The gem loads PDFium dynamically at runtime and shells out to external tools for
 ### macOS (Homebrew)
 
 ```sh
-brew install pdfium-binaries tesseract imagemagick libreoffice ghostscript
-```
-
-Set `PDFIUM_LIB_PATH` in your shell profile:
-
-```sh
-export PDFIUM_LIB_PATH="$(brew --prefix pdfium-binaries)/lib"
+brew install tesseract imagemagick libreoffice ghostscript
 ```
 
 ### macOS (Nix)
 
 ```sh
-nix shell nixpkgs#pdfium-binaries nixpkgs#tesseract nixpkgs#imagemagick nixpkgs#libreoffice nixpkgs#ghostscript
+nix shell nixpkgs#tesseract nixpkgs#imagemagick nixpkgs#libreoffice nixpkgs#ghostscript
 ```
 
 Or add to `shell.nix` / `flake.nix`:
@@ -55,15 +48,11 @@ Or add to `shell.nix` / `flake.nix`:
 ```nix
 {pkgs}: pkgs.mkShell {
   buildInputs = [
-    pkgs.pdfium-binaries
     pkgs.tesseract
     pkgs.imagemagick
     pkgs.libreoffice
     pkgs.ghostscript
   ];
-  shellHook = ''
-    export PDFIUM_LIB_PATH="${pkgs.pdfium-binaries}/lib"
-  '';
 }
 ```
 
@@ -73,7 +62,7 @@ Or add to `shell.nix` / `flake.nix`:
 sudo apt-get install -y cmake libtesseract-dev tesseract-ocr-eng imagemagick libreoffice ghostscript
 ```
 
-PDFium is bundled at build time for `x86_64-linux` and `aarch64-linux` platform gems. If using the source gem or a custom build, set `PDFIUM_LIB_PATH` as needed.
+Prebuilt platform gems include PDFium for all platforms. If using the source gem (installs on platforms without a prebuilt gem), pdfium is downloaded and cached at build time via the Rust build script — no manual setup needed.
 
 ## Usage
 
